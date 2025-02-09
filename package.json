@@ -2,8 +2,8 @@
   "name": "ebuddy-turbo",
   "private": true,
   "scripts": {
-    "build": "turbo build",
-    "dev": "turbo dev",
+    "build": "cp .env ./apps/frontend-repo/.env && cp .env ./apps/backend-repo/.env && turbo build",
+    "dev": "cp .env ./apps/frontend-repo/.env && cp .env ./apps/backend-repo/.env &&  turbo dev",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
