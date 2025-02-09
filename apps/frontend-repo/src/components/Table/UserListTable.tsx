@@ -27,6 +27,7 @@ export default function UserBodyTable({
 
 const Body = memo(({ data, refreshData }: { data: any; refreshData: () => void }) => {
   const [isEdit, setIsEdit] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const defaultValues: IFormUser = {
     name: data?.name,
     totalAverageWeightRatings: data?.totalAverageWeightRatings || 0,
@@ -41,6 +42,7 @@ const Body = memo(({ data, refreshData }: { data: any; refreshData: () => void }
   });
 
   const onSubmit = async (values: IFormUser) => {
+    setIsLoading(true);
     try {
       const updateData = await requestAPI.put(`${PATH_API.UPDATE_USER}/${data.id}`, {
         params: {
@@ -54,13 +56,14 @@ const Body = memo(({ data, refreshData }: { data: any; refreshData: () => void }
       if (updateData.isSuccess) {
         toast.success("User updated successfully.");
         refreshData();
+        setIsEdit(false);
       } else {
         toast.error("Error updating user, Please try again later.");
       }
     } catch (error) {
       toast.error("Error updating user, Please try again later.");
     }
-    setIsEdit(false);
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -104,7 +107,9 @@ const Body = memo(({ data, refreshData }: { data: any; refreshData: () => void }
           <Button onClick={() => setIsEdit(true)}>Edit</Button>
         ) : (
           <div className="flex flex-row gap-1">
-            <Button onClick={handleSubmit(onSubmit)}>Save</Button>
+            <Button onClick={handleSubmit(onSubmit)} loading={isLoading}>
+              Save
+            </Button>
             <Button color="warning" onClick={() => setIsEdit(false)}>
               Cancel
             </Button>

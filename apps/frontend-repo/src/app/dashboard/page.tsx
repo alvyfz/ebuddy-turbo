@@ -15,7 +15,7 @@ import {
   TextField,
   Button,
 } from "@mui/material";
-import UserBodyTable from "@/components/Table/UserList";
+import UserBodyTable from "@/components/Table/UserListTable";
 import Layout from "@/components/Layout/layoutPage";
 import useHelperApiClient from "@/hooks/useHelperApiClient";
 import useSWR from "swr";
